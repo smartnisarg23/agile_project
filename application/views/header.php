@@ -20,8 +20,8 @@
             <div class="top-nav">
                 <span class="menu"><img src="<?php echo base_url('assets/images/menu.png') ?>" alt="" /></span>
                 <ul class="nav1">
-                    <li class="active"><a href="<?= base_url('welcome/index') ?>">Flights</a></li>
-                    <li><a href="<?= base_url('hotels/search') ?>">Hotels</a></li>
+                    <li class="<?= ($this->router->fetch_class() == "welcome" || $this->router->fetch_class() == "flights") ? "active" : ""; ?>"><a href="<?= base_url('welcome/index') ?>">Flights</a></li>
+                    <li class="<?= ($this->router->fetch_class() == "hotels") ? "active" : ""; ?>"><a href="<?= base_url('hotels/search') ?>">Hotels</a></li>
                 </ul>
                 <!--<div class="clearfix"> </div>-->
                 <div class="dropdown-grids">

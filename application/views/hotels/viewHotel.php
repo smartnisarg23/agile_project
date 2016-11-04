@@ -5,21 +5,18 @@
         <div class="faqs-top-grids">
             <!--single-page-->
             <div class="single-page">
-                <div class="col-md-8 single-gd-lt">
+                <div class="col-md-12 single-gd-lt">
                     <div class="single-pg-hdr">
                         <h2><?php echo $hotel['name']; ?></h2>
                         <p><?php echo $hotel['addreaa_line1'] . ',' . $hotel['addreaa_line2'] ?></p>
-                        <p>Jump to: <a href="#">Over View</a>|<a href="#">Room Choices</a>
-                            <!--|<a href="#">Hotel Information</a>-->
-                        </p>
                     </div>
                     <div class="flexslider">
                         <ul class="slides">
                             <?php
                             foreach ($hotel_images as $key => $img) {
                                 ?>
-                                <li data-thumb="<?php echo base_url('assets/images/') . ((!empty($img['image'])) ? $img['image'] : 'p1.jpg'); ?>">
-                                    <img src="<?php echo base_url('assets/images/') . ((!empty($img['image'])) ? $img['image'] : 'p1.jpg'); ?>" alt=""/>
+                                <li data-thumb="<?php echo base_url('assets/images/') . ((!empty($img['image_source'])) ? $img['image_source'] : 'p1.jpg'); ?>">
+                                    <img class="hotel-img" src="<?php echo base_url('assets/images/') . ((!empty($img['image_source'])) ? $img['image_source'] : 'p1.jpg'); ?>" alt=""/>
                                 </li>
                                 <?php
                             }
@@ -38,210 +35,135 @@
                             });
                         });
                     </script>
-
                 </div>
-                <div class="col-md-4 single-gd-rt">
-                    <div class="spl-btn">
-                        <div class="spl-btn-bor">
-                            <a href="#">
-                                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>											
-                            </a>
-                            <p>Special Offer</p>	
-                            <script>
-                                $(document).ready(function () {
-                                    $('[data-toggle="tooltip"]').tooltip();
-                                });
-                            </script>
-                        </div>
-                        <div class="sp-bor-btn text-right">
-                            <h4> $<?php echo $hotel['minimum_rate']; ?></h4>
-                            <p class="best-pri">Best price</p>
-                            <!--<a class="best-btn" href="booking.html">Book Now</a>-->
-                        </div>
-                    </div>
-                    <div class="map-gd">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63718.72916803739!2d102.31975295000002!3d3.489618449999993!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31ceba2007355f81%3A0xd2ff1ad6a3ca801!2sMentakab%2C+Pahang%2C+Malaysia!5e0!3m2!1sen!2sin!4v1439535856431"></iframe>
-                    </div>
-<!--                    <div class="other-comments">
-                        <div class="comments-head">
-                            <h3>Excellent</h3>
-                            <p>4.5/5</p>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="comments-bot">
-                            <p>"Vestibulum ullamcorper condimentum luctus. Ut ullamcorper elit eu auctor commodo."</p>
-                            <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> John Doe</h4>
-                        </div>
-                        <div class="comments-bot">
-                            <p>"Aliquam non purus quis tellus varius egestas ut vitae tellus. Pellentesque non est ac tortor maximus imperdiet at id quam."</p>
-                            <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Luther</h4>
-                        </div>
-                        <div class="comments-bot">
-                            <p>"Vestibulum sapien quam, interdum quis bibendum quis, malesuada a nisi. Proin at blandit justo."</p>
-                            <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Patrick</h4>
-                        </div>
-                    </div>-->
+                <div class="col-md-12 single-gd-lt" style="margin-top: 20px">
+                    <h2>Room Details</h2>
+                </div>
+                <div class="col-md-12 single-gd-lt" style="margin-top: 20px">
+                    <table class="table table-hover"> 
+                        <thead> 
+                            <tr>
+                                <th class="p-table-grad-heading"><h6>Room Type</h6></th> 
+                                <th class="p-table-grad-heading"><h6>Price</h6></th> 
+                                <th class="p-table-grad-heading"><h6>Action</h6></th> 
+                        </thead> 
+                        <tbody> 
+                            <?php foreach ($hotel_rooms as $key => $value) { ?>
+                                <tr>
+                                    <td><?= $value['room_type'] ?></td> 
+                                    <td>$<?= $value['price'] ?></td> 
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" onclick="setAlert('<?php echo $value['id']; ?>', '<?php echo $value['room_type']; ?>', '<?php echo $value['price']; ?>')">Set Alert</button>
+                                    </td> 
+                                </tr> 
+                            <?php } ?>
+
+                        </tbody> 
+                    </table>
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <!--//single-page-->
         </div>
-        <div class="c-rooms">
-            <div class="p-table">
-                <div class="p-table-grids">
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Room type</h6>
-                        </div>
-                        <div class="p-table-grid-info">
-                            <a href="#"><img src="images/p2.jpg" alt=""></a>
-                            <div class="room-basic-info">
-                                <a href="#">Fusce vestibulum ultricies rutrum</a>
-                                <h6>1 king bed or  2 single beds</h6>
-                                <p>Vestibulum ullamcorper(condimentum luctus)</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Options</h6>
-                        </div>
-                        <div class="rate-features">
-                            <ul>
-                                <li>Morbi mollis mattis</li>
-                                <li>Donec egestas</li>
-                                <li>Donec non risus</li>
-                                <li>Pellentesque sem</li>
-                                <li>Sed ut urna id metus</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Avg rate per night</h6>
-                        </div>
-                        <div class="avg-rate">
-                            <h5>Recommended for you</h5>
-                            <p>Price is now:</p>
-                            <span class="p-offer">$140</span>
-                            <span class="p-last-price">$230</span>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Book</h6>
-                        </div>
-                        <div class="book-button-column">
-                            <a href="#">Book</a>
-                        </div>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
+    </div>
+</div>
+<div class="modal fade" id="setAlertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Set Alert
+                </h4>
             </div>
-            <div class="p-table">
-                <div class="p-table-grids">
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Room type</h6>
-                        </div>
-                        <div class="p-table-grid-info">
-                            <a href="#"><img src="images/p1.jpg" alt=""></a>
-                            <div class="room-basic-info">
-                                <a href="#">Fusce vestibulum ultricies rutrum</a>
-                                <h6>1 king bed or  2 single beds</h6>
-                                <p>Vestibulum ullamcorper(condimentum luctus)</p>
-                            </div>
-                        </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div id="form_div">
+                    <div class="form-group">
+                        <label>Your Selected Hotel: <span id="fl_p_name"></span></label>
+
                     </div>
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Options</h6>
-                        </div>
-                        <div class="rate-features">
-                            <ul>
-                                <li>Morbi mollis mattis</li>
-                                <li>Donec egestas</li>
-                                <li>Donec non risus</li>
-                                <li>Pellentesque sem</li>
-                                <li>Sed ut urna id metus</li>
-                            </ul>
-                        </div>
+                    <div class="form-group">
+                        <label>Room Type: <span id="fl_pm_name"></span></label>
                     </div>
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Avg rate per night</h6>
-                        </div>
-                        <div class="avg-rate">
-                            <h5>Recommended for you</h5>
-                            <p>Price is now:</p>
-                            <span class="p-offer">$140</span>
-                            <span class="p-last-price">$230</span>
-                        </div>
+                    <div class="form-group">
+                        <label>Actual Price</label>
+                        <span id="fl_ac_price"></span>
                     </div>
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Book</h6>
-                        </div>
-                        <div class="book-button-column">
-                            <a href="#">Book</a>
-                        </div>
+                    <div class="form-group">
+                        <label>Enter your expected price</label>
+                        <input type="text" class="form-control" id="expected_price" placeholder="Enter price" required=""/>
+                        <input type="hidden" class="form-control" id="alert_hotel_id"/>
+                        <input type="hidden" class="form-control" id="alert_hotel_room_id"/>
+                        <input type="hidden" class="form-control" id="alert_class"/>
                     </div>
-                    <div class="clearfix"> </div>
+                    <button type="button" class="btn btn-danger" onclick="submitAlert()">Submit</button>
                 </div>
-            </div>
-            <div class="p-table">
-                <div class="p-table-grids">
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Room type</h6>
-                        </div>
-                        <div class="p-table-grid-info">
-                            <a href="#"><img src="images/p2.jpg" alt=""></a>
-                            <div class="room-basic-info">
-                                <a href="#">Fusce vestibulum ultricies rutrum</a>
-                                <h6>1 king bed or  2 single beds</h6>
-                                <p>Vestibulum ullamcorper(condimentum luctus)</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Options</h6>
-                        </div>
-                        <div class="rate-features">
-                            <ul>
-                                <li>Morbi mollis mattis</li>
-                                <li>Donec egestas</li>
-                                <li>Donec non risus</li>
-                                <li>Pellentesque sem</li>
-                                <li>Sed ut urna id metus</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Avg rate per night</h6>
-                        </div>
-                        <div class="avg-rate">
-                            <h5>Recommended for you</h5>
-                            <p>Price is now:</p>
-                            <span class="p-offer">$140</span>
-                            <span class="p-last-price">$230</span>
-                        </div>
-                    </div>
-                    <div class="col-md-3 p-table-grid">
-                        <div class="p-table-grad-heading">
-                            <h6>Book</h6>
-                        </div>
-                        <div class="book-button-column">
-                            <a href="#">Book</a>
-                        </div>
-                    </div>
-                    <div class="clearfix"> </div>
+                <div id="login_r_div" style="display: none">
+                    <h4>Please do Login or Registration and try again.</h4>
+                    <br>
+                    <a href="<?= base_url('auth/signup') ?>" target="_blank"><button type="button" class="btn btn-warning">Registration</button></a>
+                    <a href="<?= base_url('auth/login') ?>" target="_blank"><button type="button" class="btn btn-success">Login</button></a>
                 </div>
+                <div id="msg_div" style="display: none">
+                    <h4>Price alert is successfully created.</h4>
+                    <br/>
+                    <h5>You will notify by email once price meets your expectation.</h5>
+                </div>
+
             </div>
         </div>
     </div>
-    <!-- //container -->
 </div>
-<!-- //banner-bottom -->
+<script type="text/javascript">
+    function setAlert(room_id, room_type, price) {
+        $('#form_div').show();
+        $('#msg_div').hide();
+        $('#login_r_div').hide();
+        $("#expected_price").val('');
+        $("#fl_ac_price").html('$' + price);
+        $("#fl_p_name").html('<?= $hotel['name'] ?>');
+        $("#fl_pm_name").html(room_type);
+        $("#alert_hotel_id").val('<?= $hotel_id ?>');
+        $("#alert_hotel_room_id").val(room_id);
+        $("#setAlertModal").modal('show');
+    }
+    function submitAlert() {
+        var hotel_id = $("#alert_hotel_id").val();
+        var hotel_room_id = $("#alert_hotel_room_id").val();
+        var expected_price = $("#expected_price").val();
+
+        $.ajax({
+            url: '<?= base_url("auth/checkLogin") ?>',
+            type: "GET",
+            success: function (data) {
+                console.log(data);
+                if (data == "success") {
+                    $.ajax({
+                        url: '<?= base_url("hotels/setAlert") ?>',
+                        type: "POST",
+                        data: {hotel_id: hotel_id, hotel_room_id: hotel_room_id, price: expected_price},
+                        success: function (data) {
+                            console.log(data);
+                            $('#form_div').hide();
+                            $('#msg_div').show();
+                        }
+                    });
+                } else {
+                    $('#form_div').hide();
+                    $('#login_r_div').show();
+                }
+            }
+        });
+    }
+</script>
+<style>
+    .hotel-img{
+        height: 500px;
+    }
+</style>

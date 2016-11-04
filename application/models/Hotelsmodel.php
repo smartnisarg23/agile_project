@@ -21,7 +21,6 @@ class HotelsModel extends CI_Model {
     function getCity($city_id) {
         $this->db->select();
         $this->db->from($this->citys);
-        $this->db->from($this->citys);
         return $this->db->get()->row_array();
     }
 
@@ -30,8 +29,6 @@ class HotelsModel extends CI_Model {
         $this->db->from($this->hotels);
         $this->db->group_by('class');
         $result = $this->db->get()->result_array();
-//        print_r($result);
-//        exit;
         $output = array();
         foreach ($result as $key => $value) {
             $output[$value['class']] = $value['count'];
@@ -76,19 +73,17 @@ class HotelsModel extends CI_Model {
         $this->db->insert($this->hotel_alerts, $data);
         return $this->db->insert_id();
     }
-    
+
     function searchHotels($filter = array()) {
-        $this->db->select('h.*, c1.name as city, hi.image_source as image');
+        $this->db->select('h.*, hi.*');
         $this->db->from($this->hotels . " as h");
-        $this->db->join($this->citys . " as c1 ", "c1.id = h.city_id");
         $this->db->join($this->hotel_images . " as hi", "h.id = hi.hotel_id and hi.main_image = 1", 'left');
         if (count($filter) > 0) {
-            if(!empty($filter['city'])){
-                $this->db->like("c1.name",$filter['city']);
-                $this->db->or_like("h.name",$filter['city']);
+            if (!empty($filter['city'])) {
+                $this->db->where("h.city_id", $filter['city']);
             }
-            if(!empty($filter['hotel_class']) && count($filter['hotel_class']) > 0){
-                $this->db->where_in('h.class',$filter['hotel_class']);
+            if (!empty($filter['search_class'])) {
+                $this->db->where('h.class', $filter['search_class']);
             }
         }
         return $this->db->get()->result_array();

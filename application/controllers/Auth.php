@@ -78,4 +78,12 @@ class Auth extends CI_Controller {
         }
     }
 
+    public function checkLogin() {
+        if (isset($this->session->userdata['login_uer_data']) && $this->session->userdata['login_uer_data'] != "") {
+            echo "success";
+        } else {
+            echo "error";
+        }
+    }
+
 }

@@ -259,6 +259,11 @@
                     </div>
                     <button type="button" class="btn btn-danger" onclick="submitAlert()">Submit</button>
                 </div>
+                <div id="login_r_div" style="display: none">
+                    <h4>Please do Login or Registration and try again.</h4>
+                    <a href="<?= base_url('auth/signup') ?>" target="_blank"><button type="button" class="btn btn-warning">Registration</button></a>
+                    <a href="<?= base_url('auth/login') ?>" target="_blank"><button type="button" class="btn btn-success">Login</button></a>
+                </div>
                 <div id="msg_div" style="display: none">
                     <h4>Price alert is successfully created.</h4>
                     <br/>
@@ -282,6 +287,7 @@
     function setAlertOneWay(fare, flight_id, provider, p_logo, class_type) {
         $('#form_div').show();
         $('#msg_div').hide();
+        $('#login_r_div').hide();
         $("#expected_price").val('');
         $("#fl_ac_price").html('$' + fare);
         $("#alert_flight_id").val(flight_id);
@@ -293,6 +299,7 @@
     function setAlertTwoWay(fare, flight_id, provider, p_logo, class_type) {
         $('#form_div').show();
         $('#msg_div').hide();
+        $('#login_r_div').hide();
         $("#expected_price").val('');
         $("#fl_ac_price").html('$' + fare);
         $("#alert_flight_id").val(flight_id);
@@ -302,18 +309,28 @@
         $("#setAlertModal").modal('show');
     }
     function submitAlert() {
-//        alert($('#expected_price').val());
         var flight_id = $("#alert_flight_id").val();
         var expected_price = $("#expected_price").val();
         var class_type = $("#alert_class").val();
         $.ajax({
-            url: '<?= base_url("flights/setAlert") ?>', // Controller URL
-            type: "POST", // Type of request to be send, called as method
-            data: {flight_id: flight_id, price: expected_price, flight_class: class_type},
+            url: '<?= base_url("auth/checkLogin") ?>',
+            type: "GET",
             success: function (data) {
                 console.log(data);
-                $('#form_div').hide();
-                $('#msg_div').show();
+                if (data == "success") {
+                    $.ajax({
+                        url: '<?= base_url("flights/setAlert") ?>',
+                        type: "POST",
+                        data: {flight_id: flight_id, price: expected_price, flight_class: class_type},
+                        success: function (data) {
+                            $('#form_div').hide();
+                            $('#msg_div').show();
+                        }
+                    });
+                } else {
+                    $('#form_div').hide();
+                    $('#login_r_div').show();
+                }
             }
         });
     }

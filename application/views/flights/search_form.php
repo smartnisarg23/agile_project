@@ -22,11 +22,6 @@
                         <img src="<?php echo base_url('assets/images/4.jpg') ?>" alt="">
                     </div>
                 </li>
-                <li>	
-                    <div class="slider-info">
-                        <img src="<?php echo base_url('assets/images/2.jpg') ?>" alt="">
-                    </div>
-                </li>
             </ul>
         </div>
     </section>
@@ -35,7 +30,7 @@
 <div class="col-md-8 banner-right">
     <div class="sap_tabs">	
         <div class="booking-info">
-            <h2>Book Domestic & International Flight Tickets</h2>
+            <h2>Book Flight Tickets</h2>
         </div>
         <div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
             <ul class="resp-tabs-list">
