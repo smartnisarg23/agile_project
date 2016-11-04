@@ -12,7 +12,7 @@ class Flights extends CI_Controller {
 
     public function search($search_type = "") {
         if ($search_type == "oneway") {
-            if (!empty($this->input->post())) {
+            if ($this->input->post() != "") {
                 if ($this->input->post('submit') == "Refine") {
                     $data = $this->input->post();
                     $departure_date = date("Y-m-d", strtotime($this->input->post('departure_date')));
@@ -34,7 +34,7 @@ class Flights extends CI_Controller {
             }
         }
         if ($search_type == "twoway") {
-            if (!empty($this->input->post())) {
+            if ($this->input->post() != "") {
                 if ($this->input->post('submit') == "Refine") {
                     $data = $this->input->post();
                     $departure_date = date("Y-m-d", strtotime($this->input->post('departure_date')));

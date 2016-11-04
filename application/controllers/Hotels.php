@@ -12,8 +12,7 @@ class Hotels extends CI_Controller {
     }
 
     public function search() {
-
-        if (!empty($this->input->post())) {
+        if ($this->input->post() != "") {
             $this->form_validation->set_rules('city', 'City', 'trim|required');
             $this->form_validation->set_rules('check_in', 'Check In', 'trim|required');
             $this->form_validation->set_rules('check_out', 'Check Out', 'trim|required');
@@ -21,20 +20,6 @@ class Hotels extends CI_Controller {
             if ($this->form_validation->run($this) === TRUE) {
                 $data['all_hotels'] = $this->HotelsModel->searchHotels($data);
             }
-//            if ($this->input->post('submit') == "Refine") {
-//                $data = $this->input->post();
-//                $departure_date = date("Y-m-d", strtotime($this->input->post('departure_date')));
-//                $all_flights = $this->FlightsModel->searchFlights($data['origin_id'], $data['destination_id'], $departure_date, $data['airline_refine']);
-//                $data['all_flights'] = $all_flights;
-//            } else {
-//                $this->form_validation->set_rules('city', 'City', 'trim|required');
-//                $this->form_validation->set_rules('check_in', 'Check In', 'trim|required');
-//                $this->form_validation->set_rules('check_out', 'Check Out', 'trim|required');
-//                $data = $this->input->post();
-//                if ($this->form_validation->run($this) === TRUE) {
-//                    
-//                }
-//            }
         }
         $data['hotels_stars_count'] = $this->HotelsModel->getCountHotelByStars();
         $allCities = $this->FlightsModel->getAllCitys();

@@ -13,7 +13,7 @@ class Auth extends CI_Controller {
         if (isset($this->session->userdata['login_uer_data']) && $this->session->userdata['login_uer_data'] != "") {
             redirect(base_url('welcome/index'));
         }
-        if (!empty($this->input->post())) {
+        if ($this->input->post() != "") {
             $this->form_validation->set_rules('email_id', 'Email', 'trim|required');
             $this->form_validation->set_rules('password', 'Password', 'trim|required');
             if ($this->form_validation->run($this) === TRUE) {
@@ -44,7 +44,7 @@ class Auth extends CI_Controller {
     }
 
     public function signUp() {
-        if (!empty($this->input->post())) {
+        if ($this->input->post() != "") {
             $this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
             $this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
             $this->form_validation->set_rules('email_id', 'Email', 'trim|required|callback_checkEmailId');
