@@ -191,7 +191,7 @@
                                                     <h5>Departure</h5>
                                                     <div class="book_date">
                                                         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                                                        <input type="date"  name="departure_date" class="datepicker" value="<?= (isset($departure_date) && $departure_date != "") ? $departure_date : ""; ?>">
+                                                        <input type="text"  name="departure_date" class="datepicker" value="<?= (isset($departure_date) && $departure_date != "") ? $departure_date : ""; ?>">
                                                     </div>		
                                                 </li>
                                                 <li class="span1_of_1 left">
