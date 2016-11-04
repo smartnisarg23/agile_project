@@ -12,7 +12,7 @@ class Hotels extends CI_Controller {
     }
 
     public function search() {
-        if ($this->input->post() != "") {
+        if ($this->input->server('REQUEST_METHOD') == 'POST') {
             $this->form_validation->set_rules('city', 'City', 'trim|required');
             $this->form_validation->set_rules('check_in', 'Check In', 'trim|required');
             $this->form_validation->set_rules('check_out', 'Check Out', 'trim|required');
