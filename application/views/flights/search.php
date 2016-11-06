@@ -62,6 +62,9 @@
                             <input type="hidden" name="class" value="<?= (isset($class) && $class != "") ? $class : "" ?>">
                             <input type="submit" value="Refine" name="submit">
                         </form>
+                        <br/>
+                        <br/>
+                        <a href="<?=  base_url('places/index/'.$city)?>" target="_blank"><button type="button" class="btn btn-success">Check Near By Places</button></a>
                     </div>
                     <div class="col-md-9 product-right">
                         <table class="table">
@@ -109,8 +112,6 @@
                                             <td class="price">$<?= $base_fare ?><br/><span class="flight_number">$<?= $fare ?> per person</span></td>
                                             <td>
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" onclick="setAlertOneWay('<?= $base_fare ?>', '<?= $value['id'] ?>', '<?= $value['provider_name'] ?>', '<?= $value['provider_logo'] ?>', '<?= $class ?>')">Set Alert</button>
-                                                <img src="<?= base_url('assets/images/fb_share.jpg') ?>" style="width: 93px" class="fb_share_btn">
-                                                <!--<a href="<?= base_url('flights/places/') ?>"></a>-->
                                             </td>
                                         </tr>
                                     <?php } ?>

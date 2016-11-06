@@ -27,7 +27,8 @@
                                     }
                                     ?>
 
-                                    <span class="starTextLabel"><?php echo $s; ?> Stars (<?php echo (!empty($hotels_stars_count[$s])) ? $hotels_stars_count[$s] : 0; ?>)</span>
+                                    <!--<span class="starTextLabel"><?php echo $s; ?> Stars (<?php echo (!empty($hotels_stars_count[$s])) ? $hotels_stars_count[$s] : 0; ?>)</span>-->
+                                    <span class="starTextLabel"><?php echo $s; ?> Stars</span>
                                 </label>
                             </div>
                             <?php

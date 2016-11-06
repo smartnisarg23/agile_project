@@ -22,31 +22,39 @@
                 <ul class="nav1">
                     <li class="<?= ($this->router->fetch_class() == "welcome" || $this->router->fetch_class() == "flights") ? "active" : ""; ?>"><a href="<?= base_url('welcome/index') ?>">Flights</a></li>
                     <li class="<?= ($this->router->fetch_class() == "hotels") ? "active" : ""; ?>"><a href="<?= base_url('hotels/search') ?>">Hotels</a></li>
+                    <?php if (isset($this->session->userdata['login_uer_data']) && $this->session->userdata['login_uer_data'] != "") { ?>
+                        <li class="<?= ($this->router->fetch_class() == "activity") ? "active" : ""; ?>"><a href="<?= base_url('activity/index') ?>">Activity</a></li>
+                        <li class="<?= ($this->router->fetch_class() == "favourite") ? "active" : ""; ?>"><a href="<?= base_url('favourite/index') ?>">Favourites</a></li>
+                    <?php } ?>
+                        <li class="<?= ($this->router->fetch_class() == "youtube") ? "active" : ""; ?>"><a href="<?= base_url('youtube/index') ?>">Agile Team</a></li>
                 </ul>
-                <!--<div class="clearfix"> </div>-->
+                <?php if (isset($this->session->userdata['login_uer_data']) && $this->session->userdata['login_uer_data'] != "") { ?>
+                    <label class="call" style="margin-top: -20px;float: right">Hi, <?= $this->session->userdata['login_uer_data']['first_name'] ?></label>
+                <?php } ?>
                 <div class="dropdown-grids">
                     <?php if (isset($this->session->userdata['login_uer_data']) && $this->session->userdata['login_uer_data'] != "") { ?>
-                        <label class="call" style="padding-top: 10px;">Hi, <?= $this->session->userdata['login_uer_data']['first_name'] ?></label>
-                    <?php } ?>
-                    <div id="loginContainer">
-                        <?php if (isset($this->session->userdata['login_uer_data']) && $this->session->userdata['login_uer_data'] != "") { ?>
+                        <div id="loginContainer">
                             <a id="loginButton" onclick="window.location = '<?= base_url("auth/logout") ?>'"><span>Logout</span></a>
-                        <?php } else { ?>
+                        </div>
+                        <div id="loginContainer" style="margin-right: 10px;background-color: #ED403A;border: 1px solid #ED403A;cursor: pointer">
+                            <a id="profileButton" onclick="window.location = '<?= base_url("auth/profile") ?>'"><span>Profile</span></a>
+                        </div>
+
+                    <?php } else { ?>
+                        <div id="loginContainer">
                             <a id="loginButton" onclick="window.location = '<?= base_url("auth/login") ?>'"><span>Login</span></a>
-                        <?php } ?>
-                    </div>
+                        </div>
+                    <?php } ?>
                     <?php if (!isset($this->session->userdata['login_uer_data'])) { ?>
                         <div id="loginContainer" style="margin-right: 10px;background-color: #ED403A;border: 1px solid #ED403A">
                             <a id="loginButton" onclick="window.location = '<?= base_url("auth/signup") ?>'"><span>Signup</span></a>
                         </div>
                     <?php } ?>
-
                 </div>
-                <!-- script-for-menu -->
                 <script>
                     $("span.menu").click(function () {
                         $("ul.nav1").slideToggle(300, function () {
-// Animation complete.
+                            // Animation complete.
                         });
                     });
 

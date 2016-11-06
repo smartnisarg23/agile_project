@@ -37,6 +37,11 @@ class AuthModel extends CI_Model {
         $this->db->where('id', $id);
         return $this->db->update($this->users, array("last_login" => date("Y-m-d H:i:s")));
     }
+    
+    function updateUser($user_id, $data) {
+        $this->db->where('id', $user_id);
+        return $this->db->update($this->users, $data);
+    }
 
     function createUser($data) {
         $this->db->insert($this->users, $data);

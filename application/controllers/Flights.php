@@ -27,6 +27,7 @@ class Flights extends CI_Controller {
                         $departure_date = date("Y-m-d", strtotime($this->input->post('departure_date')));
                         $all_flights = $this->FlightsModel->searchFlights($data['origin_id'], $data['destination_id'], $departure_date);
                         $data['all_flights'] = $all_flights;
+                        $data['city'] = $data['destination_id'];
                     }
                 }
             } else {
@@ -64,6 +65,7 @@ class Flights extends CI_Controller {
                                 $data['all_flights'][$key]['return'] = $return_flights[$key];
                             }
                         }
+                        $data['city'] = $data['destination_id'];
                     }
                 }
             } else {
@@ -88,21 +90,27 @@ class Flights extends CI_Controller {
         $alert_details = $this->FlightsModel->createFlightAlert(array('flight_id' => $flight_id, "expected_price" => $expected_price, 'user_id' => $user_id, 'class_type' => $flight_class));
     }
 
-    public function checkUserAlert() {
+    public function checkAlert() {
         $flight_alerts = $this->FlightsModel->getAllFlightAlerts();
         foreach ($flight_alerts as $key => $value) {
             $flight_details = $this->FlightsModel->getFlightDetail($value['flight_id']);
             if ($value['class_type'] == "economy" && $flight_details['fare_economy'] <= $value['expected_price']) {
-                $user_data = $this->AuthModel->getUserData($value['user_id']);
-                $flight_data = $this->FlightsModel->getFlightProvider($flight_details['flight_provider_id']);
-                $message = "Now, price of the " . $flight_data['provider_name'] . " flight meets your expectations.";
-                send_email($user_data['email_id'], "Alert message from AgileVihar", $message);
+                $data['user_data'] = $this->AuthModel->getUserData($value['user_id']);
+                $data['flight_provider'] = $this->FlightsModel->getFlightProvider($flight_details['flight_provider_id']);
+                $data['flight_details'] = $flight_details;
+                $data['alert_data'] = $value;
+                $data['current_price'] = $flight_details['fare_economy'];
+                $message = $this->load->view('alert_email_flight', $data, true);
+                send_email($data['user_data']['email_id'], "Alert message from AgileVihar", $message);
             }
             if ($value['class_type'] == "business" && $flight_details['fare_business'] <= $value['expected_price']) {
-                $user_data = $this->AuthModel->getUserData($value['user_id']);
-                $flight_data = $this->FlightsModel->getFlightProvider($flight_details['flight_provider_id']);
-                $message = "Now, price of the " . $flight_data['provider_name'] . " flight meets your expectations.";
-                send_email($user_data['email_id'], "Alert message from AgileVihar", $message);
+                $data['user_data'] = $this->AuthModel->getUserData($value['user_id']);
+                $data['flight_provider'] = $this->FlightsModel->getFlightProvider($flight_details['flight_provider_id']);
+                $data['flight_details'] = $flight_details;
+                $data['alert_data'] = $value;
+                $data['current_price'] = $flight_details['fare_business'];
+                $message = $this->load->view('alert_email_flight', $data, true);
+                send_email($data['user_data']['email_id'], "Alert message from AgileVihar", $message);
             }
         }
     }

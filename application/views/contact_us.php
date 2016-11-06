@@ -5,12 +5,6 @@
             <h2>Contact Us</h2>
         </div>
         <div class="faqs-top-grids">
-            <div class="contact-info">
-                <h4>Miscellaneous Information</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sheets containing Lorem Ipsum passages, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.It was popularised in the 1960s with the release of Letraset
-                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            </div>
             <div class="contact-grids">
                 <div class="col-md-7 contact-para">
                     <h5>Contact Form</h5>
@@ -18,38 +12,29 @@
                         <div class="grid-contact">
                             <div class="col-md-6 contact-grid">
                                 <p>First Name</p>		
-                                <input type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {
-                                                    this.value = '';
-                                                }">						
+                                <input type="text" name="first_name" id="first_name" required="required">
                             </div>
                             <div class="col-md-6 contact-grid">
                                 <p>Last Name</p>		
-                                <input type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {
-                                                    this.value = '';
-                                                }">						
+                                <input type="text" name="last_name" id="last_name" required="required">						
                             </div>
                             <div class="clearfix"> </div>
                         </div>
                         <div class="grid-contact">
                             <div class="col-md-6 contact-grid">
                                 <p>Email</p>						
-                                <input type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {
-                                                    this.value = '';
-                                                }">							
+                                <input type="email" name="email_id" id="email_id" required="required">							
                             </div>
                             <div class="col-md-6 contact-grid">						
-                                <p>Phone</p>						
-                                <input type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {
-                                                    this.value = '';}">							
+                                <p>Phone (Optional)</p>						
+                                <input type="text" name="phone" id="phone">							
                             </div>
                             <div class="clearfix"> </div>
                         </div>
                         <p class="your-para">Message</p>
-                        <textarea cols="77" rows="6" value=" " onfocus="this.value = '';" onblur="if (this.value == '') {
-                                            this.value = '';
-                                        }"></textarea>
+                        <textarea cols="77" rows="6" name="message" id="message"></textarea>
                         <div class="send">
-                            <input type="submit" value="Send">
+                            <input type="submit" value="Send" id="contact_submit">
                         </div>
                     </form>
                 </div>
@@ -66,3 +51,29 @@
     </div>
     <!-- //container -->
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#contact_submit').submit(function () {
+            var error = 0;
+            if ($('#first_name').val() == "") {
+                alert("Please enter first name");
+                error = 1;
+            }
+            if ($('#last_name').val() == "" && error == 0) {
+                alert("Please enter last name");
+                error = 1;
+            }
+            if ($('#email_id').val() == "" && error == 0) {
+                alert("Please enter email id");
+                error = 1;
+            }
+            if ($('#message').val() == "" && error == 0) {
+                alert("Please enter message");
+                error = 1;
+            }
+            if (error == 0) {
+                alert("We got your request. We will get back you soon");
+            }
+        });
+    });
+</script>

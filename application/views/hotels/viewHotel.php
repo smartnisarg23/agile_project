@@ -1,3 +1,33 @@
+<div class="container">
+    <?php if ($this->session->flashdata('success') != "") { ?>
+        <br/>
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                <?= $this->session->flashdata('success') ?>
+            </div>
+        </div>
+    <?php } ?>
+    <?php if ($this->session->flashdata('error') != "") { ?>
+        <br/>
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                <?= $this->session->flashdata('error') ?>
+            </div>
+        </div>
+    <?php } ?>
+    <?php if (validation_errors() != "") { ?>
+        <br/>
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                <?php echo validation_errors(); ?>
+            </div>
+        </div>
+    <?php } ?>
+    <div class="clearfix"> </div>
+</div>
 <!-- banner-bottom -->
 <div class="banner-bottom">
     <!-- container -->
@@ -6,10 +36,21 @@
             <!--single-page-->
             <div class="single-page">
                 <div class="col-md-12 single-gd-lt">
-                    <div class="single-pg-hdr">
+                    <div class="single-pg-hdr" style="width: 100%">
                         <h2><?php echo $hotel['name']; ?></h2>
                         <p><?php echo $hotel['addreaa_line1'] . ',' . $hotel['addreaa_line2'] ?></p>
+                        <p>Contact No: <?php echo $hotel['phone_number'] ?></p>
+                        <?php if (isset($this->session->userdata['login_uer_data']['id']) && $this->session->userdata['login_uer_data']['id'] != "") { ?>
+                            <?php if (count($fav_data) > 0) { ?>
+                                <p><a href="<?= base_url('favourite/removeFavourite/' . $hotel['id']) ?>" class="btn btn-danger" role="button">Remove from Favourite</a></p>
+                            <?php } else { ?>
+                                <p><a href="<?= base_url('favourite/addFavourite/' . $hotel['id']) ?>" class="btn btn-success" role="button">Add to Favourite</a></p>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <p><a href="<?= base_url('favourite/addFavourite/' . $hotel['id']) ?>" class="btn btn-success" role="button">Add to Favourite</a></p>
+                        <?php } ?>
                     </div>
+
                     <div class="flexslider">
                         <ul class="slides">
                             <?php
@@ -100,6 +141,7 @@
                         <input type="text" class="form-control" id="expected_price" placeholder="Enter price" required=""/>
                         <input type="hidden" class="form-control" id="alert_hotel_id"/>
                         <input type="hidden" class="form-control" id="alert_hotel_room_id"/>
+                        <input type="hidden" class="form-control" id="alert_hotel_room_type"/>
                         <input type="hidden" class="form-control" id="alert_class"/>
                     </div>
                     <button type="button" class="btn btn-danger" onclick="submitAlert()">Submit</button>
@@ -131,11 +173,13 @@
         $("#fl_pm_name").html(room_type);
         $("#alert_hotel_id").val('<?= $hotel_id ?>');
         $("#alert_hotel_room_id").val(room_id);
+        $("#alert_hotel_room_type").val(room_type);
         $("#setAlertModal").modal('show');
     }
     function submitAlert() {
         var hotel_id = $("#alert_hotel_id").val();
         var hotel_room_id = $("#alert_hotel_room_id").val();
+        var hotel_room_type = $("#alert_hotel_room_type").val();
         var expected_price = $("#expected_price").val();
 
         $.ajax({
@@ -147,7 +191,7 @@
                     $.ajax({
                         url: '<?= base_url("hotels/setAlert") ?>',
                         type: "POST",
-                        data: {hotel_id: hotel_id, hotel_room_id: hotel_room_id, price: expected_price},
+                        data: {hotel_id: hotel_id, hotel_room_id: hotel_room_id, hotel_room_type: hotel_room_type, price: expected_price},
                         success: function (data) {
                             console.log(data);
                             $('#form_div').hide();

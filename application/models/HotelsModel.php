@@ -89,4 +89,13 @@ class HotelsModel extends CI_Model {
         return $this->db->get()->result_array();
     }
 
+    function getUserHotels($user_id) {
+        $this->db->select('ha.*, h.*, hi.*');
+        $this->db->from($this->hotel_alerts . " as ha");
+        $this->db->join($this->hotels . " as h ", "h.id = ha.hotel_id");
+        $this->db->join($this->hotel_images . " as hi ", "h.id = hi.hotel_id and hi.main_image = 1", 'left');
+        $this->db->where('ha.user_id', $user_id);
+        return $this->db->get()->result_array();
+    }
+
 }

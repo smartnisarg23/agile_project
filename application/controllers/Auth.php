@@ -55,7 +55,7 @@ class Auth extends CI_Controller {
             if ($this->form_validation->run($this) === TRUE) {
                 unset($post_data['re_password']);
                 $post_data['role_id'] = 2;
-                $post_data['password'] = md5($post_data['re_password']);
+                $post_data['password'] = md5($post_data['password']);
                 $login_data = $this->AuthModel->createUser($post_data);
                 $this->session->set_flashdata("success", "You are successfully register with us. Now you can do login.");
                 redirect(base_url("auth/signup"));
@@ -83,6 +83,57 @@ class Auth extends CI_Controller {
             echo "success";
         } else {
             echo "error";
+        }
+    }
+
+    public function profile() {
+        if (isset($this->session->userdata['login_uer_data']) && $this->session->userdata['login_uer_data'] != "") {
+            if ($this->input->server('REQUEST_METHOD') == 'POST') {
+                $this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
+                $this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
+                $this->form_validation->set_rules('email_id', 'Email', 'trim|required|callback_updateEmailId');
+                $this->form_validation->set_rules('contact_no', 'Contact No', 'trim|required');
+                $this->form_validation->set_rules('password', 'Password', 'trim');
+                $post_data = $this->input->post();
+                if ($this->form_validation->run($this) === TRUE) {
+                    if ($post_data['password'] != "") {
+                        $post_data['password'] = md5($post_data['password']);
+                    } else {
+                        unset($post_data['password']);
+                    }
+                    $login_data = $this->AuthModel->updateUser($this->session->userdata['login_uer_data']['id'], $post_data);
+                    
+                    $this->session->userdata['login_uer_data']['first_name'] = $post_data['first_name'];
+                    $this->session->userdata['login_uer_data']['last_name'] = $post_data['last_name'];
+                    $this->session->userdata['login_uer_data']['email_id'] = $post_data['email_id'];
+                    $this->session->userdata['login_uer_data']['contact_no'] = $post_data['contact_no'];
+                    
+                    $this->session->set_flashdata("success", "Profile Data are updated successfully .");
+                    redirect(base_url("auth/profile"));
+                } else {
+                    $data = $post_data;
+                }
+            }
+            $data['user_data'] = $this->session->userdata['login_uer_data'];
+            $data['page_title'] = "User Profile";
+            $data['page_name'] = "auth/profile";
+            $this->load->view('index', $data);
+        } else {
+            redirect(base_url('welcome/index'));
+        }
+    }
+
+    public function updateEmailId($email) {
+        if ($email != $this->session->userdata['login_uer_data']['email_id']) {
+            $rows = $this->AuthModel->checkEmailId($email);
+            if ($rows > 0) {
+                $this->form_validation->set_message('checkEmailId', 'Email id already exist. Please try another.');
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
         }
     }
 

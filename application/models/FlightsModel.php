@@ -17,6 +17,7 @@ class FlightsModel extends CI_Model {
         $this->db->from($this->citys . " as c");
         return $this->db->get()->result_array();
     }
+
     function getCity($city_id) {
         $this->db->select();
         $this->db->from($this->citys);
@@ -36,13 +37,14 @@ class FlightsModel extends CI_Model {
         $this->db->where("id", $flight_id);
         return $this->db->get()->row_array();
     }
+
     function getPlaceImages($city_id) {
         $this->db->select();
         $this->db->from($this->places);
         $this->db->where("place_id", $city_id);
         return $this->db->get()->result_array();
     }
-    
+
     function getFlightProvider($id) {
         $this->db->select();
         $this->db->from($this->flights_provider);
@@ -80,6 +82,17 @@ class FlightsModel extends CI_Model {
         }
         $this->db->like('f.departure_time', $date);
         $this->db->order_by('f.departure_time');
+        return $this->db->get()->result_array();
+    }
+
+    function getUserFlights($user_id) {
+        $this->db->select('fa.*, f.*, c1.name as origin, c2.name as destination, fp.provider_name, fp.provider_logo');
+        $this->db->from($this->flight_alerts . " as fa");
+        $this->db->join($this->flights . " as f ","f.id = fa.flight_id");
+        $this->db->join($this->citys . " as c1 ", "c1.id = f.origin_id");
+        $this->db->join($this->citys . " as c2 ", "c2.id = f.destination_id");
+        $this->db->join($this->flights_provider . " as fp ", "fp.id = f.flight_provider_id");
+        $this->db->where("fa.user_id", $user_id);
         return $this->db->get()->result_array();
     }
 
