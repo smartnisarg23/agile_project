@@ -53,7 +53,7 @@
                                 <div class="p-left">
                                     <div class="">
                                         <a href="<?php echo base_url('hotels/viewHotel/' . $hotel['id']); ?>"> 
-                                            <img src="<?php echo base_url('assets/images/') . ((!empty($hotel['image'])) ? $hotel['image'] : 'p1.jpg'); ?>" style="width: 100%" />
+                                            <img src="<?php echo base_url('assets/images/') . ((!empty($hotel['image_source'])) ? $hotel['image_source'] : 'p1.jpg'); ?>" style="width: 100%" />
                                         </a>
                                     </div>
                                 </div>
