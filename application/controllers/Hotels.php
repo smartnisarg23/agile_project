@@ -16,7 +16,7 @@ class Hotels extends CI_Controller {
         if ($this->input->server('REQUEST_METHOD') == 'POST') {
             $this->form_validation->set_rules('city', 'City', 'trim|required');
             $this->form_validation->set_rules('check_in', 'Check In', 'trim|required');
-            $this->form_validation->set_rules('check_out', 'Check Out', 'trim|required');
+            $this->form_validation->set_rules('check_out', 'Check Out', 'trim');
             $data = $this->input->post();
             if ($this->form_validation->run($this) === TRUE) {
                 $data['all_hotels'] = $this->HotelsModel->searchHotels($data);
